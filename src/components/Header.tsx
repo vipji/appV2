@@ -67,6 +67,8 @@ const Header = () => {
 
   // Navigation items for the tubelight navbar
   const navItems = [
+    // Conditionally include Home button only when NOT on home page
+    ...(isHomePage ? [] : [{ name: 'Home', url: '#home', icon: Home }]),
     { name: 'Courses', url: '#courses', icon: BookOpen },
     { name: 'Explore', url: '#problems', icon: Compass },
     { name: 'Contact', url: '#contact', icon: Phone },
