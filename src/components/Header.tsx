@@ -67,15 +67,15 @@ const Header = () => {
 
   // Navigation items for the tubelight navbar
   const navItems = [
-    // Conditionally include Home button only when NOT on home page
-    ...(isHomePage ? [] : [{ name: 'Home', url: '#home', icon: Home }]),
+    // Always include Home button, but conditionally show it
+    { name: 'Home', url: '#home', icon: Home, showOnHome: false },
     { name: 'Courses', url: '#courses', icon: BookOpen },
     { name: 'Explore', url: '#problems', icon: Compass },
     { name: 'Contact', url: '#contact', icon: Phone },
     { name: 'Articles', url: '#articles', icon: FileText },
     { name: 'Tutorials', url: '#tutorials', icon: GraduationCap },
     { name: 'About', url: '#about', icon: User }
-  ];
+  ].filter(item => item.showOnHome !== false || !isHomePage);
 
   const handleNavClick = (item: any) => {
     setActiveTab(item.name);
