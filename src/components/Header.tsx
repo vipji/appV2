@@ -31,6 +31,9 @@ const Header = () => {
 
   // Check if we're on home page (no hash or #home)
   const isHomePage = currentPage === 'home';
+  
+  // Show sidebar only on home page and when it's open
+  const shouldShowSidebar = isHomePage && isSidebarOpen;
 
   const sidebarMenuItems = [
     { icon: BookOpen, label: 'All Courses', href: '#courses', color: 'green' },
@@ -305,13 +308,13 @@ const Header = () => {
       )}
 
       {/* Enhanced Hidden Sidebar Navigation - Only show when NOT on home page */}
-      {!isHomePage && (
+      {shouldShowSidebar && (
         <div
           ref={sidebarRef}
           className={`
             fixed top-20 left-6 w-80 z-40
             transform transition-all duration-500 ease-out rounded-3xl
-            ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+            translate-x-0
           `}
           style={{
             height: 'calc(100vh - 8rem)', // Account for navbar and spacing
@@ -478,7 +481,7 @@ const Header = () => {
       )}
 
       {/* Enhanced Sidebar Overlay - Only show when sidebar is open */}
-      {isSidebarOpen && !isHomePage && (
+      {shouldShowSidebar && (
         <div
           className="fixed inset-0 backdrop-blur-sm z-30 transition-all duration-500"
           style={{
