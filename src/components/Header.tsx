@@ -276,36 +276,6 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Enhanced Moving Border Back Button - Only show when NOT on home page */}
-      {!isHomePage && (
-        <div className="fixed top-24 left-6 z-40">
-          <Button
-            onClick={handleBackToHome}
-            borderRadius="1rem"
-            containerClassName="h-12 w-20"
-            className={`
-              ${isDarkMode
-                ? 'bg-black/80 border-white/20 text-white hover:bg-black/90'
-                : 'bg-white/80 border-black/20 text-gray-900 hover:bg-white/90'
-              }
-              backdrop-blur-lg transition-all duration-300
-            `}
-            borderClassName={`
-              ${isDarkMode
-                ? 'bg-[radial-gradient(var(--blue-500)_40%,transparent_60%)]'
-                : 'bg-[radial-gradient(var(--indigo-500)_40%,transparent_60%)]'
-              }
-            `}
-            duration={2000}
-            title="Back to Home"
-          >
-            <div className="flex items-center justify-center space-x-1">
-              <ArrowLeft className="w-4 h-4" />
-              <span className="text-sm font-medium">Home</span>
-            </div>
-          </Button>
-        </div>
-      )}
 
       {/* Enhanced Hidden Sidebar Navigation - Only show when NOT on home page */}
       {shouldShowSidebar && (
