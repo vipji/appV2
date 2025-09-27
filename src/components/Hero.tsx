@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Play, Code, ArrowRight, CheckCircle, Sparkles, Zap, Target } from 'lucide-react';
+import { Play, Code, ArrowRight, CheckCircle, Sparkles, Zap, Target, X } from 'lucide-react';
 import CodeEditor from './CodeEditor';
 import ProblemsModal from './ProblemsModal';
 import { useTheme } from './ThemeProvider';
