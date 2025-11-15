@@ -50,7 +50,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ isOpen, onClose, initialProblem
       name: 'Main.java',
       content: initialProblem?.starterCode || `public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, #1 Developer.dev!");
+        System.out.println("Hello, dev1x!");
         
         // Start coding here
         Solution solution = new Solution();
@@ -286,7 +286,7 @@ class Solution {
             
             <div>
               <h2 className={`font-semibold text-lg ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                #1 Developer.dev IDE
+                dev1x IDE
               </h2>
               {initialProblem && (
                 <div className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>

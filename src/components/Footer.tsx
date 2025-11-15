@@ -114,7 +114,7 @@ const Footer = () => {
                   <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
                     <GeometricLogo />
                   </div>
-                  <span className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>#1 Developer.dev</span>
+                  <span className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>dev1x</span>
                 </div>
                 <p className={`leading-relaxed mb-6 max-w-md ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                   The ultimate platform for mastering Java interview coding. Practice with real problems, 
@@ -163,7 +163,7 @@ const Footer = () => {
               isDarkMode ? 'border-gray-700/50' : 'border-gray-300/50'
             }`}>
               <div className={`text-sm mb-4 md:mb-0 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                © 2025 #1 Developer.dev. All rights reserved.
+                © 2025 dev1x. All rights reserved.
               </div>
               <div className={`flex items-center space-x-6 text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                 <a href="#" className={`transition-colors ${
