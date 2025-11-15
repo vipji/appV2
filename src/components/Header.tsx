@@ -1,76 +1,32 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, ShoppingCart, Moon, Sun, Home, BookOpen, Compass, Phone, FileText, GraduationCap, ArrowLeft, User } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ShoppingCart, Moon, Sun, Home, BookOpen, Compass, Phone, FileText, GraduationCap, User } from 'lucide-react';
 import Logo from './Logo';
 import LoginModal from './LoginModal';
 import { useTheme } from './ThemeProvider';
 import { motion } from 'framer-motion';
 import { cn } from '../lib/utils';
-import { Button } from './ui/moving-border';
 import SparkleButton from './ui/sparkle-button';
 
 const Header = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('Home');
-  const [currentPage, setCurrentPage] = useState('home');
+  const [activeNavTab, setActiveNavTab] = useState('Home');
   const { isDarkMode, toggleTheme } = useTheme();
-  const sidebarRef = useRef<HTMLDivElement>(null);
 
-  // Check current page based on URL hash
+  // Update active navigation tab based on URL hash
   useEffect(() => {
-    const updateCurrentPage = () => {
+    const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '') || 'home';
-      setCurrentPage(hash);
-      setActiveTab(hash.charAt(0).toUpperCase() + hash.slice(1));
+      const formattedTabName = hash.charAt(0).toUpperCase() + hash.slice(1);
+      setActiveNavTab(formattedTabName);
     };
 
-    updateCurrentPage();
-    window.addEventListener('hashchange', updateCurrentPage);
-    return () => window.removeEventListener('hashchange', updateCurrentPage);
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Check if we're on home page (no hash or #home)
-  const isHomePage = currentPage === 'home';
-  
-  // Show sidebar only on home page and when it's open
-  const shouldShowSidebar = isHomePage && isSidebarOpen;
-
-  const sidebarMenuItems = [
-    { icon: BookOpen, label: 'All Courses', href: '#courses', color: 'green' },
-    { icon: Compass, label: 'Playground', href: '#problems', color: 'purple' },
-    { icon: FileText, label: 'Articles', href: '#articles', color: 'orange' },
-    { icon: GraduationCap, label: 'Tutorials', href: '#tutorials', color: 'pink' },
-    { icon: Phone, label: 'Contact', href: '#contact', color: 'teal' },
-    { icon: User, label: 'About', href: '#about', color: 'blue' },
-  ];
-
-  const getHoverColors = (color: string) => {
-    const colorMap = {
-      blue: 'hover:bg-blue-500/20 hover:border-blue-400/30 hover:text-blue-300',
-      green: 'hover:bg-green-500/20 hover:border-green-400/30 hover:text-green-300',
-      purple: 'hover:bg-purple-500/20 hover:border-purple-400/30 hover:text-purple-300',
-      orange: 'hover:bg-orange-500/20 hover:border-orange-400/30 hover:text-orange-300',
-      pink: 'hover:bg-pink-500/20 hover:border-pink-400/30 hover:text-pink-300',
-      teal: 'hover:bg-teal-500/20 hover:border-teal-400/30 hover:text-teal-300',
-    };
-    return colorMap[color as keyof typeof colorMap] || 'hover:bg-gray-500/20 hover:border-gray-400/30 hover:text-gray-300';
-  };
-
-  const getIconHoverColor = (color: string) => {
-    const iconColorMap = {
-      blue: 'group-hover:text-blue-400',
-      green: 'group-hover:text-green-400',
-      purple: 'group-hover:text-purple-400',
-      orange: 'group-hover:text-orange-400',
-      pink: 'group-hover:text-pink-400',
-      teal: 'group-hover:text-teal-400',
-    };
-    return iconColorMap[color as keyof typeof iconColorMap] || 'group-hover:text-gray-400';
-  };
-
-  // Navigation items for the tubelight navbar
-  const navItems = [
-    // Always include Home button, but conditionally show it
+  // Navigation menu items for the header
+  const navigationItems = [
     { name: 'Home', url: '#home', icon: Home, showOnHome: false },
     { name: 'Courses', url: '#courses', icon: BookOpen },
     { name: 'Explore', url: '#problems', icon: Compass },
@@ -78,44 +34,21 @@ const Header = () => {
     { name: 'Articles', url: '#articles', icon: FileText },
     { name: 'Tutorials', url: '#tutorials', icon: GraduationCap },
     { name: 'About', url: '#about', icon: User }
-  ].filter(item => item.showOnHome !== false || !isHomePage);
+  ].filter(item => item.showOnHome !== false);
 
-  const handleNavClick = (item: any) => {
-    setActiveTab(item.name);
+  // Handle navigation item click
+  const handleNavigationClick = (navItem: any) => {
+    setActiveNavTab(navItem.name);
     
-    // Handle navigation
-    if (item.url.startsWith('#')) {
-      window.location.hash = item.url;
-      const element = document.querySelector(item.url);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+    if (navItem.url.startsWith('#')) {
+      window.location.hash = navItem.url;
+      const targetElement = document.querySelector(navItem.url);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      window.location.href = item.url;
+      window.location.href = navItem.url;
     }
-  };
-
-  const handleBackToHome = () => {
-    setActiveTab('Home');
-    window.location.hash = '#home';
-    const element = document.querySelector('#home');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  // Handle sidebar menu item click
-  const handleSidebarItemClick = (href: string) => {
-    // Navigate to the section
-    if (href.startsWith('#')) {
-      window.location.hash = href;
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-    // Close sidebar after navigation
-    setIsSidebarOpen(false);
   };
 
   return (
@@ -133,34 +66,39 @@ const Header = () => {
               : 'rgba(0, 0, 0, 0.2)',
           }}
         >
-          {/* Left Section - Hamburger + Logo (Only show hamburger if NOT on home page) */}
+          {/* Left Section - Logo and Home Button */}
           <div className="flex items-center space-x-2 px-3">
-            {!isHomePage && (
-              <button
-                className={`p-2 transition-all duration-200 rounded-lg ${
-                  isDarkMode 
-                    ? 'text-gray-300 hover:text-white hover:bg-gray-700/30' 
-                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-200/50'
-                }`}
-                onClick={() => setIsSidebarOpen(true)}
-                aria-label="Open sidebar menu"
-              >
-                <Menu className="w-4 h-4" />
-              </button>
-            )}
             <Logo size="sm" isDarkMode={isDarkMode} />
+            <button
+              onClick={() => {
+                window.location.hash = '#home';
+                const targetElement = document.querySelector('#home');
+                if (targetElement) {
+                  targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className={cn(
+                "p-2 rounded-lg transition-all duration-200",
+                isDarkMode 
+                  ? "text-gray-300 hover:text-white hover:bg-gray-700/30" 
+                  : "text-gray-700 hover:text-gray-900 hover:bg-gray-200/50"
+              )}
+              title="Go to Home"
+            >
+              <Home className="w-4 h-4" />
+            </button>
           </div>
 
           {/* Center Section - Navigation Items */}
           <div className="flex items-center gap-1">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeTab === item.name;
+            {navigationItems.map((navItem) => {
+              const Icon = navItem.icon;
+              const isActive = activeNavTab === navItem.name;
 
               return (
                 <button
-                  key={item.name}
-                  onClick={() => handleNavClick(item)}
+                  key={navItem.name}
+                  onClick={() => handleNavigationClick(navItem)}
                   className={cn(
                     "relative cursor-pointer text-sm font-semibold px-4 py-2 rounded-full transition-all duration-300",
                     isDarkMode 
@@ -169,7 +107,7 @@ const Header = () => {
                     isActive && (isDarkMode ? "bg-white/10 text-white" : "bg-black/10 text-gray-900"),
                   )}
                 >
-                  <span className="hidden lg:inline">{item.name}</span>
+                  <span className="hidden lg:inline">{navItem.name}</span>
                   <span className="lg:hidden">
                     <Icon size={16} strokeWidth={2.5} />
                   </span>
@@ -275,194 +213,6 @@ const Header = () => {
           </div>
         </div>
       </header>
-
-
-      {/* Enhanced Hidden Sidebar Navigation - Only show when NOT on home page */}
-      {shouldShowSidebar && (
-        <div
-          ref={sidebarRef}
-          className={`
-            fixed top-20 left-6 w-80 z-40
-            transform transition-all duration-500 ease-out rounded-3xl
-            translate-x-0
-          `}
-          style={{
-            height: 'calc(100vh - 8rem)', // Account for navbar and spacing
-            marginTop: '1rem', // Space below the navbar
-            background: isDarkMode
-              ? `
-                radial-gradient(ellipse at top left, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom right, rgba(147, 51, 234, 0.15) 0%, transparent 50%),
-                linear-gradient(135deg, 
-                  rgba(17, 24, 39, 0.98) 0%, 
-                  rgba(31, 41, 55, 0.98) 30%,
-                  rgba(17, 24, 39, 0.98) 70%,
-                  rgba(31, 41, 55, 0.98) 100%
-                )
-              `
-              : `
-                radial-gradient(ellipse at top left, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom right, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
-                linear-gradient(135deg, 
-                  rgba(255, 255, 255, 0.98) 0%, 
-                  rgba(248, 250, 252, 0.98) 30%,
-                  rgba(255, 255, 255, 0.98) 70%,
-                  rgba(248, 250, 252, 0.98) 100%
-                )
-              `,
-            backdropFilter: 'blur(25px) saturate(200%)',
-            WebkitBackdropFilter: 'blur(25px) saturate(200%)',
-            border: `2px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
-            boxShadow: isDarkMode
-              ? `
-                0 25px 50px -12px rgba(0, 0, 0, 0.4),
-                0 0 0 1px rgba(99, 102, 241, 0.1),
-                inset 1px 0 0 rgba(255, 255, 255, 0.1)
-              `
-              : `
-                0 25px 50px -12px rgba(0, 0, 0, 0.25),
-                0 0 0 1px rgba(99, 102, 241, 0.1),
-                inset 1px 0 0 rgba(255, 255, 255, 0.8)
-              `,
-          }}
-        >
-          {/* Enhanced Sidebar Header */}
-          <div 
-            className={`p-6 border-b relative overflow-hidden rounded-t-3xl ${
-              isDarkMode ? 'border-gray-700/50' : 'border-gray-300/50'
-            }`}
-            style={{
-              background: isDarkMode
-                ? `linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%)`
-                : `linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%)`,
-            }}
-          >
-            <div className="flex items-center justify-between relative z-10">
-              <Logo size="md" isDarkMode={isDarkMode} />
-              <button
-                onClick={() => setIsSidebarOpen(false)}
-                className={`p-2 transition-all duration-300 rounded-lg hover:scale-110 ${
-                  isDarkMode 
-                    ? 'text-gray-400 hover:text-white hover:bg-gray-700/30' 
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200/50'
-                }`}
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Enhanced Sidebar Menu Items */}
-          <div className="flex-1 overflow-y-auto py-6">
-            <nav className="space-y-2 px-4">
-              {sidebarMenuItems.map((item, index) => (
-                <button
-                  key={item.label}
-                  onClick={() => handleSidebarItemClick(item.href)}
-                  className={`
-                    w-full flex items-center space-x-4 px-4 py-3.5 rounded-xl
-                    transition-all duration-300 group
-                    transform hover:translate-x-2 hover:scale-105
-                    border border-transparent
-                    ${isDarkMode ? getHoverColors(item.color) : getHoverColors(item.color).replace('text-', 'text-gray-700 hover:text-')}
-                    relative overflow-hidden
-                  `}
-                  style={{ 
-                    animationDelay: `${index * 40}ms`,
-                    background: isDarkMode
-                      ? `linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)`
-                      : `linear-gradient(135deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.01) 100%)`,
-                    backdropFilter: 'blur(10px)',
-                  }}
-                >
-                  <item.icon className={`w-5 h-5 transition-all duration-300 group-hover:scale-110 ${
-                    isDarkMode 
-                      ? `text-gray-400 ${getIconHoverColor(item.color)}` 
-                      : `text-gray-600 ${getIconHoverColor(item.color)}`
-                  }`} />
-                  <span className={`font-medium text-sm group-hover:font-semibold transition-all duration-300 relative z-10 ${
-                    isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
-                    {item.label}
-                  </span>
-                </button>
-              ))}
-            </nav>
-          </div>
-
-          {/* Enhanced Sidebar Footer */}
-          <div 
-            className={`p-6 border-t space-y-4 relative overflow-hidden rounded-b-3xl ${
-              isDarkMode ? 'border-gray-700/50' : 'border-gray-300/50'
-            }`}
-            style={{
-              background: isDarkMode
-                ? `linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%)`
-                : `linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%)`,
-            }}
-          >
-            <div className="relative z-10">
-              {/* Enhanced Dark Mode Toggle */}
-              <div className={`flex items-center justify-between p-3 rounded-xl backdrop-blur-sm border ${
-                isDarkMode 
-                  ? 'bg-gray-800/50 border-gray-700/30' 
-                  : 'bg-white/50 border-gray-300/30'
-              }`}>
-                <span className={`font-medium text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Dark Mode</span>
-                <button 
-                  onClick={toggleTheme}
-                  className={`
-                    relative inline-flex h-6 w-11 items-center rounded-full transition-all duration-300
-                    ${isDarkMode ? 'bg-gradient-to-r from-purple-600 to-blue-600' : 'bg-gray-300'}
-                    hover:scale-110 hover:shadow-lg
-                  `}
-                >
-                  <span
-                    className={`
-                      inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300
-                      ${isDarkMode ? 'translate-x-6' : 'translate-x-1'}
-                      shadow-lg
-                    `}
-                  />
-                </button>
-              </div>
-
-              {/* Enhanced Login Button */}
-              <button 
-                onClick={() => setIsLoginModalOpen(true)}
-                className="
-                  w-full bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 text-white 
-                  px-6 py-3.5 rounded-xl font-semibold text-sm
-                  hover:from-purple-700 hover:via-blue-700 hover:to-purple-700
-                  transition-all duration-300 shadow-lg hover:shadow-xl
-                  transform hover:scale-105 active:scale-95
-                  relative overflow-hidden group
-                "
-                style={{
-                  backgroundSize: '200% 200%',
-                  animation: 'gradient-shift 3s ease-in-out infinite',
-                }}
-              >
-                <span className="relative z-10">Login</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Enhanced Sidebar Overlay - Only show when sidebar is open */}
-      {shouldShowSidebar && (
-        <div
-          className="fixed inset-0 backdrop-blur-sm z-30 transition-all duration-500"
-          style={{
-            background: isDarkMode
-              ? `radial-gradient(ellipse at center, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.8) 100%)`
-              : `radial-gradient(ellipse at center, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%)`,
-          }}
-          onClick={() => setIsSidebarOpen(false)}
-        />
-      )}
-
       {/* Login Modal */}
       <LoginModal 
         isOpen={isLoginModalOpen} 

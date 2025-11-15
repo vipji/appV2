@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from './components/ThemeProvider';
 import Header from './components/Header';
+// import Sidebar from './components/Sidebar';
 import Hero from './components/Hero';
 import Features from './components/Features';
 import Problems from './components/Problems';

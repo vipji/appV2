@@ -124,7 +124,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
           <div className="text-center mb-6">
             <h2 className={`text-2xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-              {isLogin ? 'Welcome Back!' : 'Join ConnoisseurCode'}
+              {isLogin ? 'Welcome Back!' : 'Join #1 Developer.dev'}
             </h2>
             <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
               {isLogin 

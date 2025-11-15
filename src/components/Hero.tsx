@@ -1,212 +1,18 @@
 import React, { useState } from 'react';
-import { Play, Code, ArrowRight, CheckCircle, Sparkles, Zap, Target, X } from 'lucide-react';
+import { Play, Code, ArrowRight, CheckCircle, Sparkles, Zap, Target } from 'lucide-react';
 import CodeEditor from './CodeEditor';
 import ProblemsModal from './ProblemsModal';
 import { useTheme } from './ThemeProvider';
 import { SparklesCore } from './ui/sparkles';
-import { Menu } from 'lucide-react';
 
 const Hero = () => {
-  const [showCodeEditor, setShowCodeEditor] = useState(false);
-  const [showProblems, setShowProblems] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isCodeEditorOpen, setIsCodeEditorOpen] = useState(false);
+  const [isProblemsModalOpen, setIsProblemsModalOpen] = useState(false);
   const { isDarkMode } = useTheme();
-
-  const sidebarMenuItems = [
-    { icon: Play, label: 'Start Coding', href: '#', color: 'blue', action: () => setShowCodeEditor(true) },
-    { icon: Target, label: 'View Problems', href: '#', color: 'green', action: () => setShowProblems(true) },
-    { icon: Code, label: 'Practice', href: '#problems', color: 'purple' },
-    { icon: Sparkles, label: 'Features', href: '#features', color: 'orange' },
-    { icon: Zap, label: 'Testimonials', href: '#testimonials', color: 'pink' },
-    { icon: ArrowRight, label: 'Contact', href: '#contact', color: 'teal' },
-  ];
-
-  const getHoverColors = (color: string) => {
-    const colorMap = {
-      blue: 'hover:bg-blue-500/20 hover:border-blue-400/30 hover:text-blue-300',
-      green: 'hover:bg-green-500/20 hover:border-green-400/30 hover:text-green-300',
-      purple: 'hover:bg-purple-500/20 hover:border-purple-400/30 hover:text-purple-300',
-      orange: 'hover:bg-orange-500/20 hover:border-orange-400/30 hover:text-orange-300',
-      pink: 'hover:bg-pink-500/20 hover:border-pink-400/30 hover:text-pink-300',
-      teal: 'hover:bg-teal-500/20 hover:border-teal-400/30 hover:text-teal-300',
-    };
-    return colorMap[color as keyof typeof colorMap] || 'hover:bg-gray-500/20 hover:border-gray-400/30 hover:text-gray-300';
-  };
-
-  const getIconHoverColor = (color: string) => {
-    const iconColorMap = {
-      blue: 'group-hover:text-blue-400',
-      green: 'group-hover:text-green-400',
-      purple: 'group-hover:text-purple-400',
-      orange: 'group-hover:text-orange-400',
-      pink: 'group-hover:text-pink-400',
-      teal: 'group-hover:text-teal-400',
-    };
-    return iconColorMap[color as keyof typeof iconColorMap] || 'group-hover:text-gray-400';
-  };
-
-  const handleSidebarItemClick = (item: any) => {
-    if (item.action) {
-      item.action();
-    } else if (item.href.startsWith('#')) {
-      const element = document.querySelector(item.href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-    setIsSidebarOpen(false);
-  };
 
   return (
     <>
       <section className={`pt-20 pb-16 relative overflow-hidden ${isDarkMode ? 'bg-black' : 'bg-white'}`}>
-        {/* Sidebar Toggle Button - Only visible on home page */}
-        <button
-          onClick={() => setIsSidebarOpen(true)}
-          className={`
-            fixed top-24 left-6 z-50 p-3 rounded-xl transition-all duration-300
-            ${isDarkMode 
-              ? 'bg-gray-800/80 border border-gray-700/50 text-gray-300 hover:text-white hover:bg-gray-700/80' 
-              : 'bg-white/80 border border-gray-300/50 text-gray-700 hover:text-gray-900 hover:bg-white/90'
-            }
-            backdrop-blur-lg shadow-lg hover:shadow-xl hover:scale-105
-          `}
-          title="Open menu"
-        >
-          <Menu className="w-5 h-5" />
-        </button>
-
-        {/* Enhanced Sidebar Navigation - Home page only */}
-        <div
-          className={`
-            fixed top-20 left-6 w-80 z-40
-            transform transition-all duration-500 ease-out rounded-3xl
-            ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-          `}
-          style={{
-            height: 'calc(100vh - 8rem)',
-            marginTop: '1rem',
-            background: isDarkMode
-              ? `
-                radial-gradient(ellipse at top left, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom right, rgba(147, 51, 234, 0.15) 0%, transparent 50%),
-                linear-gradient(135deg, 
-                  rgba(17, 24, 39, 0.98) 0%, 
-                  rgba(31, 41, 55, 0.98) 30%,
-                  rgba(17, 24, 39, 0.98) 70%,
-                  rgba(31, 41, 55, 0.98) 100%
-                )
-              `
-              : `
-                radial-gradient(ellipse at top left, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom right, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
-                linear-gradient(135deg, 
-                  rgba(255, 255, 255, 0.98) 0%, 
-                  rgba(248, 250, 252, 0.98) 30%,
-                  rgba(255, 255, 255, 0.98) 70%,
-                  rgba(248, 250, 252, 0.98) 100%
-                )
-              `,
-            backdropFilter: 'blur(25px) saturate(200%)',
-            WebkitBackdropFilter: 'blur(25px) saturate(200%)',
-            border: `2px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
-            boxShadow: isDarkMode
-              ? `
-                0 25px 50px -12px rgba(0, 0, 0, 0.4),
-                0 0 0 1px rgba(99, 102, 241, 0.1),
-                inset 1px 0 0 rgba(255, 255, 255, 0.1)
-              `
-              : `
-                0 25px 50px -12px rgba(0, 0, 0, 0.25),
-                0 0 0 1px rgba(99, 102, 241, 0.1),
-                inset 1px 0 0 rgba(255, 255, 255, 0.8)
-              `,
-          }}
-        >
-          {/* Sidebar Header */}
-          <div 
-            className={`p-6 border-b relative overflow-hidden rounded-t-3xl ${
-              isDarkMode ? 'border-gray-700/50' : 'border-gray-300/50'
-            }`}
-            style={{
-              background: isDarkMode
-                ? `linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%)`
-                : `linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%)`,
-            }}
-          >
-            <div className="flex items-center justify-between relative z-10">
-              <div>
-                <h3 className={`font-bold text-lg ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                  Quick Actions
-                </h3>
-                <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                  Start your coding journey
-                </p>
-              </div>
-              <button
-                onClick={() => setIsSidebarOpen(false)}
-                className={`p-2 transition-all duration-300 rounded-lg hover:scale-110 ${
-                  isDarkMode 
-                    ? 'text-gray-400 hover:text-white hover:bg-gray-700/30' 
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200/50'
-                }`}
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Sidebar Menu Items */}
-          <div className="flex-1 overflow-y-auto py-6">
-            <nav className="space-y-2 px-4">
-              {sidebarMenuItems.map((item, index) => (
-                <button
-                  key={item.label}
-                  onClick={() => handleSidebarItemClick(item)}
-                  className={`
-                    w-full flex items-center space-x-4 px-4 py-3.5 rounded-xl
-                    transition-all duration-300 group
-                    transform hover:translate-x-2 hover:scale-105
-                    border border-transparent
-                    ${isDarkMode ? getHoverColors(item.color) : getHoverColors(item.color).replace('text-', 'text-gray-700 hover:text-')}
-                    relative overflow-hidden
-                  `}
-                  style={{ 
-                    animationDelay: `${index * 40}ms`,
-                    background: isDarkMode
-                      ? `linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)`
-                      : `linear-gradient(135deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.01) 100%)`,
-                    backdropFilter: 'blur(10px)',
-                  }}
-                >
-                  <item.icon className={`w-5 h-5 transition-all duration-300 group-hover:scale-110 ${
-                    isDarkMode 
-                      ? `text-gray-400 ${getIconHoverColor(item.color)}` 
-                      : `text-gray-600 ${getIconHoverColor(item.color)}`
-                  }`} />
-                  <span className={`font-medium text-sm group-hover:font-semibold transition-all duration-300 relative z-10 ${
-                    isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
-                    {item.label}
-                  </span>
-                </button>
-              ))}
-            </nav>
-          </div>
-        </div>
-
-        {/* Sidebar Overlay */}
-        {isSidebarOpen && (
-          <div
-            className="fixed inset-0 backdrop-blur-sm z-30 transition-all duration-500"
-            style={{
-              background: isDarkMode
-                ? `radial-gradient(ellipse at center, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.8) 100%)`
-                : `radial-gradient(ellipse at center, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%)`,
-            }}
-            onClick={() => setIsSidebarOpen(false)}
-          />
-        )}
 
         {/* Background decorative elements */}
         <div className={`absolute inset-0 ${isDarkMode 
@@ -352,7 +158,7 @@ const Hero = () => {
 
                   <div className="flex flex-col sm:flex-row gap-4">
                     <button 
-                      onClick={() => setShowCodeEditor(true)}
+                      onClick={() => setIsCodeEditorOpen(true)}
                       className="hero-button bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-3 text-lg font-semibold shadow-lg hover:shadow-xl"
                     >
                       <Play className="w-5 h-5" />
@@ -360,7 +166,7 @@ const Hero = () => {
                       <Sparkles className="w-4 h-4" />
                     </button>
                     <button 
-                      onClick={() => setShowProblems(true)}
+                      onClick={() => setIsProblemsModalOpen(true)}
                       className={`hero-button-secondary border-2 px-8 py-4 rounded-xl transition-all duration-300 flex items-center justify-center space-x-3 text-lg font-semibold ${
                         isDarkMode 
                           ? 'border-gray-400 text-gray-300 hover:border-blue-400 hover:text-blue-300 hover:bg-blue-500/10'
@@ -419,7 +225,7 @@ const Hero = () => {
                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                         <div className={`ml-4 text-sm font-medium flex items-center space-x-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                           <Code className="w-4 h-4" />
-                          <span>ConnoisseurCode - Two Sum Problem</span>
+                          <span>#1 Developer.dev - Two Sum Problem</span>
                           <Target className="w-4 h-4 text-green-500" />
                         </div>
                       </div>
@@ -445,7 +251,7 @@ const Hero = () => {
                     </div>
                     
                     {/* Enhanced Success Badge */}
-                    <div className="absolute -bottom-4 -right-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-3 rounded-xl shadow-lg transform rotate-3 hover:rotate-0 transition-transform duration-300">
+                    <div className="absolute -bottom-12 -right-6 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-3 rounded-xl shadow-lg transform rotate-3 hover:rotate-0 transition-transform duration-300">
                       <div className="flex items-center space-x-2">
                         <CheckCircle className="w-5 h-5" />
                         <span className="font-semibold">Tests Passed</span>
@@ -477,14 +283,14 @@ const Hero = () => {
 
       {/* Code Editor Modal */}
       <CodeEditor
-        isOpen={showCodeEditor}
-        onClose={() => setShowCodeEditor(false)}
+        isOpen={isCodeEditorOpen}
+        onClose={() => setIsCodeEditorOpen(false)}
       />
 
       {/* Problems Modal */}
       <ProblemsModal
-        isOpen={showProblems}
-        onClose={() => setShowProblems(false)}
+        isOpen={isProblemsModalOpen}
+        onClose={() => setIsProblemsModalOpen(false)}
       />
     </>
   );

@@ -50,7 +50,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ isOpen, onClose, initialProblem
       name: 'Main.java',
       content: initialProblem?.starterCode || `public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, ConnoisseurCode!");
+        System.out.println("Hello, #1 Developer.dev!");
         
         // Start coding here
         Solution solution = new Solution();
@@ -116,7 +116,6 @@ class Solution {
       roundedSelection: false,
       readOnly: false,
       cursorStyle: 'line',
-      automaticLayout: true,
     });
   };
 
@@ -251,9 +250,7 @@ class Solution {
     const dataStr = JSON.stringify(files, null, 2);
     const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
     
-    const exportFileDefaultName = 'connoisseurcode-project.json';
-    
-    const linkElement = document.createElement('a');
+        const exportFileDefaultName = 'developer1-project.json';    const linkElement = document.createElement('a');
     linkElement.setAttribute('href', dataUri);
     linkElement.setAttribute('download', exportFileDefaultName);
     linkElement.click();
@@ -289,7 +286,7 @@ class Solution {
             
             <div>
               <h2 className={`font-semibold text-lg ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                ConnoisseurCode IDE
+                #1 Developer.dev IDE
               </h2>
               {initialProblem && (
                 <div className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>

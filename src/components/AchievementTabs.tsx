@@ -356,7 +356,7 @@ const AchievementTabs = () => {
                 <div className="flex flex-col gap-y-3 self-stretch items-start">
                   <div className="flex flex-col items-start self-stretch gap-y-2">
                     <p className="text-indigo-400 font-semibold text-lg">Achievement System</p>
-                    <p className="text-white font-semibold text-4xl">ConnoisseurCode Achievers: Unlocking Success</p>
+                    <p className="text-white font-semibold text-4xl">#1 Developer.dev Achievers: Unlocking Success</p>
                   </div>
                   <p className="text-base text-gray-300 font-medium">
                     Meet our accomplished graduates who have unlocked various achievements on their coding journey. 

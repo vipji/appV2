@@ -34,7 +34,7 @@ const About = () => {
       social: {
         github: '#',
         linkedin: '#',
-        email: 'shikha@connoisseurcode.dev'
+        email: 'shikha@1developer.dev'
       },
       stats: {
         testCases: '500+',
@@ -95,7 +95,7 @@ const About = () => {
           <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
             Meet the Team Behind
             <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              ConnoisseurCode
+              #1 Developer.dev
             </span>
           </h1>
           <p className={`text-xl max-w-3xl mx-auto leading-relaxed ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
