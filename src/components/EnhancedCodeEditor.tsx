@@ -70,7 +70,7 @@ const EnhancedCodeEditor: React.FC<CodeEditorProps> = ({ isOpen, onClose, initia
       name: 'Main.java',
       content: initialProblem?.starterCode || `public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, #1 Developer.dev!");
+        System.out.println("Hello, dev1x!");
         
         // Start coding here
         Solution solution = new Solution();
@@ -640,8 +640,6 @@ class Solution {
                     formatOnPaste: true,
                     formatOnType: true,
                     suggestOnTriggerCharacters: true,
-                    bracketPairColorization: true,
-                    'bracketPairColorization.independentColorPoolPerBracketType': true,
                   }}
                 />
               </div>

@@ -65,7 +65,10 @@ jobs:
             ✅ Test case runner
             ✅ Code sharing via URL
             
-            **Deployed to:** https://vipji.github.io/appV2/
+            // 🔧 DOMAIN CHANGE LOCATION #4: Update deployment URL in release notes
+            // CURRENT: **Deployed to:** https://vipji.github.io/dev1x/
+            // CHANGE TO: **Deployed to:** https://dev1x.lovestoblog.com/
+            **Deployed to:** https://vipji.github.io/dev1x/
           draft: false
           prerelease: false
 
@@ -79,7 +82,10 @@ jobs:
               repo: context.repo.repo,
               event_type: 'deployment_success',
               client_payload: {
-                deployment_url: 'https://vipji.github.io/appV2/',
+                // 🔧 DOMAIN CHANGE LOCATION #3: Update deployment notification URL
+                // CURRENT: deployment_url: 'https://vipji.github.io/dev1x/',
+                // CHANGE TO: deployment_url: 'https://dev1x.lovestoblog.com/',
+                deployment_url: 'https://vipji.github.io/dev1x/',
                 commit: '${{ github.sha }}'
               }
             });

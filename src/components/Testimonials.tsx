@@ -416,11 +416,11 @@ const Testimonials = () => {
                   <div className="flex flex-col items-start self-stretch gap-y-3">
                     <p className={`font-semibold text-lg ${isDarkMode ? 'text-yellow-500' : 'text-yellow-600'}`}>Success Stories</p>
                     <h2 className={`font-bold text-3xl lg:text-4xl leading-tight ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                      #1 Developer.dev Graduates: Powering Top Tech Giants
+                      dev1x Graduates: Powering Top Tech Giants
                     </h2>
                   </div>
                   <p className={`text-base font-medium leading-relaxed max-w-2xl ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                    Meet our proud alumni shaping the future at major tech companies. Discover the impact #1 Developer.dev has had on their careers and the tech landscape.
+                    Meet our proud alumni shaping the future at major tech companies. Discover the impact dev1x has had on their careers and the tech landscape.
                   </p>
                 </div>
 

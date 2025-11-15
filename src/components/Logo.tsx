@@ -60,7 +60,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', showText = true, isDarkMode = 
             ${isDarkMode ? 'text-white' : 'text-gray-900'}
             transition-colors duration-300
           `}>
-            #1Developer
+            dev1x
           </span>
           <span className={`
             ${size === 'sm' ? 'text-sm' : size === 'md' ? 'text-base' : 'text-lg'} 

@@ -225,7 +225,7 @@ const Hero = () => {
                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                         <div className={`ml-4 text-sm font-medium flex items-center space-x-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                           <Code className="w-4 h-4" />
-                          <span>#1 Developer.dev - Two Sum Problem</span>
+                          <span>dev1x - Two Sum Problem</span>
                           <Target className="w-4 h-4 text-green-500" />
                         </div>
                       </div>

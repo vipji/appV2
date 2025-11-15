@@ -1,0 +1,83 @@
+# Configuration Guide for Switching to dev1x.lovestoblog.com
+
+## LOCATION #1: package.json
+File: /package.json
+
+CHANGE THIS:
+  "homepage": "https://vipji.github.io/dev1x/"
+
+TO THIS:
+  "homepage": "https://dev1x.lovestoblog.com/"
+
+WHY: This tells npm/build tools where your app will be deployed.
+Used for generating correct asset paths during build.
+
+---
+
+## LOCATION #2: vite.config.ts
+File: /vite.config.ts
+
+CHANGE THIS:
+  base: "/dev1x",
+
+TO THIS (for root domain):
+  base: "/",
+
+WHY: The base path tells Vite where the app is served from.
+- "/dev1x" = GitHub Pages subdirectory
+- "/" = root of custom domain
+
+AFTER CHANGING: Run `npm run build`
+
+---
+
+## LOCATION #3: .github/workflows/deploy.yml (Deployment Notification)
+File: /.github/workflows/deploy.yml
+
+CHANGE THIS:
+  deployment_url: 'https://vipji.github.io/dev1x/',
+
+TO THIS:
+  deployment_url: 'https://dev1x.lovestoblog.com/',
+
+WHY: This URL is sent in deployment success notifications.
+
+---
+
+## LOCATION #4: .github/workflows/deploy.yml (Release Notes)
+File: /.github/workflows/deploy.yml
+
+CHANGE THIS:
+  **Deployed to:** https://vipji.github.io/dev1x/
+
+TO THIS:
+  **Deployed to:** https://dev1x.lovestoblog.com/
+
+WHY: This URL appears in GitHub Release notes.
+
+---
+
+## DYNAMIC URLS (No Changes Needed)
+
+Share URL generation (src/components/EnhancedCodeEditor.tsx) automatically uses:
+- window.location.origin
+- window.location.pathname
+
+So it will automatically work on any domain where the app is hosted.
+
+---
+
+## COMPLETE CHECKLIST
+
+When ready to switch domains:
+
+[ ] 1. Update homepage in package.json
+[ ] 2. Update base path in vite.config.ts
+[ ] 3. Update deployment_url in .github/workflows/deploy.yml
+[ ] 4. Update "Deployed to" URL in .github/workflows/deploy.yml
+[ ] 5. Run: npm run build
+[ ] 6. Run: npm run preview (test locally)
+[ ] 7. Push changes to main branch
+[ ] 8. Configure DNS for dev1x.lovestoblog.com
+[ ] 9. Deploy to hosting service
+[ ] 10. Test the live domain
