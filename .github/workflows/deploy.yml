@@ -58,12 +58,6 @@ jobs:
 
       - name: Notify Deployment Failure
         if: failure()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: '🚨 Deployment Failed',
-              body: `Deployment failed on commit ${context.sha}\n\nView logs: ${context.server_url}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
-            })
+        run: |
+          echo "❌ Deployment failed"
+          echo "Check logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
