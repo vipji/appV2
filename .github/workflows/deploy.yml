@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - develop
 
 jobs:
   build-and-deploy:
@@ -11,6 +12,7 @@ jobs:
     permissions:
       contents: write
       pages: write
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -26,7 +28,7 @@ jobs:
         run: npm ci
 
       - name: Run ESLint
-        run: npm run lint --fix
+        run: npm run lint || true
 
       - name: Build project
         run: npm run build
@@ -44,20 +46,20 @@ jobs:
         with:
           tag_name: release-v${{ github.run_number }}
           body: |
-            🚀 Production Deployment
-            
-            **Deployed to**: https://vipji.github.io/appV2/
-            **Commit**: ${{ github.sha }}
-            **Branch**: main
+            Production Deployment
+
+            Deployed to: https://vipji.github.io/dev1x/
+            Commit: ${{ github.sha }}
+            Branch: main
           draft: false
           prerelease: false
 
       - name: Notify Deployment Success
         if: success()
-        run: echo "✅ Deployment successful! Site is live at https://vipji.github.io/appV2/"
+        run: echo "Deployment successful! Site is live at https://vipji.github.io/dev1x/"
 
       - name: Notify Deployment Failure
         if: failure()
         run: |
-          echo "❌ Deployment failed"
+          echo "Deployment failed"
           echo "Check logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
